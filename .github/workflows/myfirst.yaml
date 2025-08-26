@@ -1,4 +1,4 @@
-name: "Dhondhu Maharaaj"
+name: "Vishu Maharaaj"
 
 on: 
   push:
@@ -8,15 +8,15 @@ on:
       - 'hotfix/**'
 
 jobs:
-  DhondhuMaharaj: 
-    name: Dhondhu Maharaj
+  Myjob2608: 
+    name: Ram bhai
     runs-on: Windows
     steps:
-    - name: Dhondhu Maharaj Rocks!
-      run: echo Dhondhu Maharaj
+    - name: Brother
+      run: echo veeru number 2.
     
-    - name: Rondu Maharaj Rocks!
-      run: echo Rondu Maharaj
+    - name: father
+      run: echo shree raj pal
 
-    - name: Tondu Maharaj Rocks!
-      run: echo Tondu Maharaj
+    - name: Jai bhole ki
+      run: Bhole bum bum....
