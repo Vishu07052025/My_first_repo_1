@@ -16,6 +16,6 @@ resource "azurerm_storage_account" "strg" {
 }
 resource "azurerm_storage_container" "strgcont" {
   name                  = "vishucontainer2608"
-  storage_account_id    = "vishustoraccount2508"
+ storage_account_id    = azurerm_storage_account.strg.id
   container_access_type = "private"
 }
