@@ -36,6 +36,6 @@ jobs:
 
       - name: Terraform Apply
         shell: powershell
-        run: terraform app
+        run: terraform apply -auto-approve tfplan
 
 
