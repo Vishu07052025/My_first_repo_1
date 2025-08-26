@@ -1,0 +1,43 @@
+name: terraform-pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform Full Pipeline
+    runs-on: self-hosted  # Windows self-hosted runner
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check & Install Terraform (Windows PowerShell)
+        shell: powershell
+        run: |
+          $terraform = Get-Command terraform -ErrorAction SilentlyContinue
+          if (-not $terraform) {
+            Write-Host "Terraform not found. Installing..."
+            Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_windows_amd64.zip" -OutFile "terraform.zip"
+            Expand-Archive -Path "terraform.zip" -DestinationPath "$env:USERPROFILE\terraform"
+            $env:PATH = "$env:USERPROFILE\terraform;" + $env:PATH
+          } else {
+            Write-Host "Terraform already installed."
+          }
+      - name: Terraform Validate
+        shell: powershell
+        run: terraform validate
+
+      - name: Terraform Init
+        shell: powershell
+        run: terraform init
+
+      - name: Terraform Plan
+        shell: powershell
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        shell: powershell
+        run: terraform apply -auto-approve tfplan
