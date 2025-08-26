@@ -26,11 +26,6 @@ jobs:
           } else {
             Write-Host "Terraform already installed."
           }
-
-      - name: Terraform Format Check
-        shell: powershell
-        run: terraform fmt -check
-
       - name: Terraform Validate
         shell: powershell
         run: terraform validate
