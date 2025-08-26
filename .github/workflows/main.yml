@@ -26,10 +26,6 @@ jobs:
           } else {
             Write-Host "Terraform already installed."
           }
-      - name: Terraform Validate
-        shell: powershell
-        run: terraform validate
-
       - name: Terraform Init
         shell: powershell
         run: terraform init
