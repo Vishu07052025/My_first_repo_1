@@ -9,7 +9,7 @@ on:
 
 jobs:
   Myjob2608: 
-    name: Ram bhai
+    name: Rambhai
     runs-on: Windows
     steps:
     - name: Brother
