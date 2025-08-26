@@ -1,4 +1,4 @@
-name: Terraform Init (Windows Compatible)
+name: Terraform Init on Windows
 
 on:
   push:
@@ -8,26 +8,26 @@ on:
 
 jobs:
   terraform-init:
-    runs-on: windows
+    runs-on: Windows
 
     steps:
-      - name: Checkout code
+      - name: Checkout repop
         uses: actions/checkout@v3
 
-      - name: Check and Install Terraform if not present
-        shell: pwsh
+      - name: Install Terraform (if not present)
+        shell: powershell
         run: |
           $terraform = Get-Command terraform -ErrorAction SilentlyContinue
           if (-not $terraform) {
             Write-Host "Terraform not found. Installing..."
             Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_windows_amd64.zip" -OutFile "terraform.zip"
             Expand-Archive -Path "terraform.zip" -DestinationPath "$env:USERPROFILE\terraform"
-            $env:Path += ";$env:USERPROFILE\terraform"
-            Copy-Item "$env:USERPROFILE\terraform\terraform.exe" "C:\Windows\System32\terraform.exe"
+            $env:PATH = "$env:USERPROFILE\terraform;" + $env:PATH
           } else {
             Write-Host "Terraform is already installed."
           }
 
       - name: Terraform Init
+        shell: powershell
         run: terraform init
 
