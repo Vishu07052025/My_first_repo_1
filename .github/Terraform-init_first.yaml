@@ -1,0 +1,33 @@
+name: Terraform Init
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  terraform-init:
+    runs-on: windows
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Check Terraform Installation
+        run: |
+          if ! command -v terraform &> /dev/null
+          then
+            echo "Terraform not found. Installing..."
+            sudo apt-get update && sudo apt-get install -y wget unzip
+            wget https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_linux_amd64.zip
+            unzip terraform_1.8.5_linux_amd64.zip
+            sudo mv terraform /usr/local/bin/
+          else
+            echo "Terraform already installed."
+          fi
+
+      - name: Terraform Init
+        run: terraform init
+
+    
