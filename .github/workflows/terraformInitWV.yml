@@ -1,4 +1,4 @@
-name: terraform-init
+name: terraform-pipeline
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  terraform-init:
-    name: Terraform Init on Windows Runner
+  terraform:
+    name: Terraform Full Pipeline
     runs-on: self-hosted  # Windows self-hosted runner
 
     steps:
@@ -27,7 +27,24 @@ jobs:
             Write-Host "Terraform already installed."
           }
 
+      - name: Terraform Format Check
+        shell: powershell
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        shell: powershell
+        run: terraform validate
+
       - name: Terraform Init
         shell: powershell
         run: terraform init
+
+      - name: Terraform Plan
+        shell: powershell
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        shell: powershell
+        run: terraform app
+
 
