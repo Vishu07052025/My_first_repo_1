@@ -13,10 +13,10 @@ jobs:
     runs-on: Windows
     steps:
     - name: Brother
-      run: echo veeru number 2.
+      run: echo veeru number 2
     
     - name: father
       run: echo shree raj pal
 
     - name: Jai bhole ki
-      run: Bhole bum bum.
+      run: Bhole bum bum
