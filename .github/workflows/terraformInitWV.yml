@@ -1,20 +1,20 @@
-name: Terraform Init on Windows
+name: terraform-init
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   terraform-init:
-    runs-on: Windows
+    name: Terraform Init on Windows Runner
+    runs-on: self-hosted  # Windows self-hosted runner
 
     steps:
-      - name: Checkout repop
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Install Terraform (if not present)
+      - name: Check & Install Terraform (Windows PowerShell)
         shell: powershell
         run: |
           $terraform = Get-Command terraform -ErrorAction SilentlyContinue
@@ -24,7 +24,7 @@ jobs:
             Expand-Archive -Path "terraform.zip" -DestinationPath "$env:USERPROFILE\terraform"
             $env:PATH = "$env:USERPROFILE\terraform;" + $env:PATH
           } else {
-            Write-Host "Terraform is already installed."
+            Write-Host "Terraform already installed."
           }
 
       - name: Terraform Init
