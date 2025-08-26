@@ -14,9 +14,8 @@ resource "azurerm_storage_account" "strg" {
     environment = "staging"
   }
 }
-
 resource "azurerm_storage_container" "strgcont" {
   name                  = "vishucontainer2608"
-  storage_account_id    = azurerm_storage_account.example.id
+  storage_account_id    = "vishustoraccount2508"
   container_access_type = "private"
 }
