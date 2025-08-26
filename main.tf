@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "RG" {
 }
 
 resource "azurerm_storage_account" "strg" {
-  name                     = "vishustoraccount2508"
+  name                     = "vishustoraccount2608"
   resource_group_name      = "vishuresource2608"
   location                 = "West Europe"
   account_tier             = "Standard"
