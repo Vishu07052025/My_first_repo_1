@@ -1,0 +1,32 @@
+name: terraform-init
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform-init:
+    name: Terraform Init on Windows Runner
+    runs-on: self-hosted  # Windows self-hosted runner
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check & Install Terraform (Windows PowerShell)
+        shell: powershell
+        run: |
+          $terraform = Get-Command terraform -ErrorAction SilentlyContinue
+          if (-not $terraform) {
+            Write-Host "Terraform not found. Installing..."
+            Invoke-WebRequest -Uri "https://releases.hashicorp.com/terraform/1.8.5/terraform_1.8.5_windows_amd64.zip" -OutFile "terraform.zip"
+            Expand-Archive -Path "terraform.zip" -DestinationPath "$env:USERPROFILE\terraform"
+            $env:PATH = "$env:USERPROFILE\terraform;" + $env:PATH
+          } else {
+            Write-Host "Terraform already installed."
+          }
+
+      - name: Terraform Init
+        shell: powershell
+        run: terraform init
